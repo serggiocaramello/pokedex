@@ -1,0 +1,12 @@
+//Helpers
+@import "helpers/variables", "helpers/mixins", "helpers/helpers";
+
+//base
+@import "base/reset", "base/reset", "base/typography";
+
+//components
+@import "components/navbar";
+
+//pages
+@import "sections/main", "sections/sectionPokemon", "sections/sectionMoves",
+  "sections/sectionItems";

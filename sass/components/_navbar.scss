@@ -1,0 +1,17 @@
+/* Estilos para navbar */
+@media screen and (min-width: 768px) {
+  .navbar {
+    height: 100vh;
+    position: fixed;
+    width: 12rem;
+  }
+
+  .navbar-collapse,
+  .navbar-nav {
+    height: 100%;
+  }
+}
+
+.navbar {
+  background-color: var(--primary-color);
+}

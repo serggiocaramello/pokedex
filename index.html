@@ -75,24 +75,19 @@
             </div>
 
             <div class="col-md-6">
-              <select id="selectPokemon" class="mb-3 form-select col-md-6">
-                <option value="Bulbasaur">Bulbasaur</option>
-                <option value="Ivysaur">Ivysaur</option>
-                <option value="Venusaur">Venusaur</option>
-                <option value="Charmander">Charmander</option>
-                <option value="Charmeleon">Charmeleon</option>
-                <option value="Charizard">Charizard</option>
-                <option value="Squirtle">Squirtle</option>
-                <option value="Wartortle">Wartortle</option>
-                <option value="Blastoise">Blastoise</option>
-              </select>
+              <select
+                id="selectPokemon"
+                class="mb-3 form-select col-md-6"
+              ></select>
             </div>
           </div>
         </form>
 
         <div class="pokemon__data row mt-md-5">
           <div class="pokemon__header col-md-6">
-            <h2 class="text-center pokemon__name">Typhlosion</h2>
+            <h2 id="pokemonName" class="text-center pokemon__name">
+              Typhlosion
+            </h2>
             <img
               class="img-fluid"
               src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/157.png"
@@ -104,11 +99,11 @@
               <tbody>
                 <tr>
                   <th scope="row">Number</th>
-                  <td>157</td>
+                  <td id="pokemonNumber">157</td>
                 </tr>
                 <tr>
                   <th scope="row">Type</th>
-                  <td>Fire</td>
+                  <td id="pokemonType">Fire</td>
                 </tr>
                 <tr>
                   <th scope="row">Height</th>
@@ -260,7 +255,7 @@
               <tbody>
                 <tr>
                   <th scope="row">Name</th>
-                  <td>Pound</td>
+                  <td id="movesName">Pound</td>
                 </tr>
                 <tr>
                   <th scope="row">Type</th>

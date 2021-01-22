@@ -1,4 +1,6 @@
 $(document).ready(function () {
+  var inputPokemon = $("#inputPokemon");
+  var pokemon = "bulbasaur";
   var pokemonName = $("#pokemonName");
   var pokemonImage = $("#pokemonImage");
   var pokemonNumber = $("#pokemonNumber");
@@ -6,10 +8,10 @@ $(document).ready(function () {
   var pokemonWeight = $("#pokemonWeight");
   var pokemonAbility = $("#pokemonAbility");
   var pokemonHiddenAbility = $("#pokemonHiddenAbility");
+  var pokemonType = $("#pokemonType");
   var inputMoves = $("#inputMoves");
   var inputPokemon = $("#inputPokemon");
   var selectPokemon = $("#selectPokemon");
-  var pokemon = "";
 
   var labels = [
     "Hp",
@@ -21,7 +23,7 @@ $(document).ready(function () {
   ];
 
   function renderStats(name, stats) {
-    var dataPoints = [];
+    dataPoints = [];
     for (var i = 0; i < stats.length; i++) {
       dataPoints.push({
         y: stats[i].base_stat,
@@ -55,11 +57,11 @@ $(document).ready(function () {
   var itemEffect = $("#itemEffect");
   var itemTitle = $("#itemTitle");
   var itemImg = $("#itemImg");
+
   var selectItems = $("#selectItem");
   
   var item = "";
 
-  
   var obtenerPokemon = function () {
     $.ajax({
       type: "GET",
@@ -75,24 +77,38 @@ $(document).ready(function () {
           data.sprites.other["official-artwork"].front_default
         );
         pokemonNumber.text(data.id);
-        pokemonHeight.text((parseInt(data.height) / 10).toString() + "m");
-        pokemonWeight.text((parseInt(data.weight) / 10).toString() + "m");
+        if (data.types.length > 0) {
+          pokemonType.text("");
+          data.types.forEach((ty) => {
+            pokemonType.text(pokemonType.text() + " " + ty.type.name);
+          });
+        } else {
+          pokemonType.text(data.types[0]);
+        }
+        pokemonHeight.text((parseInt(data.height) / 10).toString() + " m");
+        pokemonWeight.text((parseInt(data.weight) / 10).toString() + " m");
         pokemonAbility.text(data.abilities[0].ability.name);
-        // pokemonHiddenAbility.text(data.abilities[1].ability.name);
+        pokemonAbility.text("");
+        data.abilities.forEach((abi) => {
+          if (!abi.is_hidden) {
+            if (data.abilities.length > 2) {
+              pokemonAbility.text(
+                pokemonAbility.text() + abi.ability.name + " / "
+              );
+            } else {
+              pokemonAbility.text(abi.ability.name);
+            }
+          } else {
+            pokemonHiddenAbility.text(abi.ability.name);
+          }
+        });
 
         renderStats(pokemonName.text(), data.stats);
       },
     });
   };
 
-  $.ajax({
-    type: "GET",
-    dataType: "json",
-    url: `https://pokeapi.co/api/v2/pokemon/?limit=1118`,
-    success: function (data) {
-      console.log(data);
-    },
-  });
+  obtenerPokemon();
 
   var listadoPokemon = function () {
     $.ajax({
@@ -127,6 +143,7 @@ $(document).ready(function () {
     pokemon = $(this).children("option:selected").val();
     obtenerPokemon();
   });
+
 
 
   var llamarItem = function() {$.ajax({
@@ -171,15 +188,16 @@ $(document).ready(function () {
   selectItems.on("change", function (e) {
     item = $(this).children("option:selected").val();
      llamarItem();
-      });    
+  });    
 
+    // e.preventDefault;
 
     $.ajax({
       type: "GET",
       dataType: "json",
       url: `https://pokeapi.co/api/v2/item/${item}/`,
       success: function (data) {
-        itemImg.attr("src",data.sprites.default);
+        itemImg.attr("src", data.sprites.default);
         itemName.text(data.name);
         itemTitle.text(data.name);
         itemId.text(data.id);
@@ -187,12 +205,9 @@ $(document).ready(function () {
         itemAttributes.text(data.attributes.name);
         itemCategory.text(data.category.name);
         itemEffect.text(data.effect_entries[0].effect);
-                
       },
     });
   });
 
 });
-
-
 

@@ -58,6 +58,8 @@ $(document).ready(function () {
   var itemTitle = $("#itemTitle");
   var itemImg = $("#itemImg");
 
+  var selectItems = $("#selectItem");
+  
   var item = "";
 
   var obtenerPokemon = function () {
@@ -142,11 +144,51 @@ $(document).ready(function () {
     obtenerPokemon();
   });
 
-  inputItems.on("keypress", function (e) {
-    var codeItem = e.keyCode ? e.keyCode : e.which;
+
+
+  var llamarItem = function() {$.ajax({
+    type: "GET",
+    dataType: "json",
+    url: `https://pokeapi.co/api/v2/item/${item}/`,
+    success: function (data) {
+      itemImg.attr("src",data.sprites.default);
+      itemName.text(data.name);
+      itemTitle.text(data.name);
+      itemId.text(data.id);
+      itemCost.text(data.cost);
+      itemAttributes.text(data.attributes.name);
+      itemCategory.text(data.category.name);
+      itemEffect.text(data.effect_entries[0].effect);
+              
+    },
+  })};
+
+   inputItems.on("keypress", function (e) {    
+    var codeItem = e.keyCode ? e.keyCode : e.which; 
     if (codeItem == 13) {
-      item = this.value;
-    }
+          item = this.value;
+          llamarItem(); }   
+   
+    });
+
+  $.ajax({
+    type: "GET",
+    dataType: "json",
+    url: `https://pokeapi.co/api/v2/item/?limit=954`,
+    success: function (data) {
+      console.log(data);
+      for (var i = 0; i < data.count; i++) {
+        selectItems.append(
+          $(`<option value="${data.results[i].name}">${data.results[i].name}</option>`)
+        );
+      }
+    },
+      });
+
+  selectItems.on("change", function (e) {
+    item = $(this).children("option:selected").val();
+     llamarItem();
+  });    
 
     // e.preventDefault;
 
@@ -166,4 +208,6 @@ $(document).ready(function () {
       },
     });
   });
+
 });
+

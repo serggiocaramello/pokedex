@@ -1,5 +1,6 @@
 $(document).ready(function () {
   var pokemonName = $("#pokemonName");
+  var pokemonImage = $("#pokemonImage");
   var pokemonNumber = $("#pokemonNumber");
   var pokemonHeight = $("#pokemonHeight");
   var pokemonWeight = $("#pokemonWeight");
@@ -8,9 +9,43 @@ $(document).ready(function () {
   var inputMoves = $("#inputMoves");
   var inputPokemon = $("#inputPokemon");
   var selectPokemon = $("#selectPokemon");
-
   var pokemon = "";
-  
+
+  var labels = [
+    "Hp",
+    "Attack",
+    "Defense",
+    "Special Attack",
+    "Special Defense",
+    "Speed",
+  ];
+
+  function renderStats(name, stats) {
+    var dataPoints = [];
+    for (var i = 0; i < stats.length; i++) {
+      dataPoints.push({
+        y: stats[i].base_stat,
+        label: labels[i],
+      });
+    }
+    new CanvasJS.Chart("chartContainer", {
+      animationEnabled: true,
+      theme: "light2",
+      title: {
+        text: `${name} base stats`,
+      },
+      axisY: {
+        includeZero: true,
+      },
+      data: [
+        {
+          type: "column",
+          dataPoints: dataPoints,
+        },
+      ],
+    }).render();
+  }
+
   var inputItems = $("#inputItems");
   var itemName = $("#itemName");
   var itemId = $("#itemId");
@@ -30,57 +65,66 @@ $(document).ready(function () {
       dataType: "json",
       url: `https://pokeapi.co/api/v2/pokemon/${pokemon}`,
       success: function (data) {
-        pokemonName.text(data.name).css("textTransform", "capitalize");
+        pokemonName.text(
+          data.name.charAt(0).toUpperCase() + data.name.substr(1).toLowerCase()
+        );
+
+        pokemonImage.attr(
+          "src",
+          data.sprites.other["official-artwork"].front_default
+        );
         pokemonNumber.text(data.id);
         pokemonHeight.text((parseInt(data.height) / 10).toString() + "m");
         pokemonWeight.text((parseInt(data.weight) / 10).toString() + "m");
-        pokemonAbility.text(data.abilities[0]);
-        pokemonHiddenAbility.text(data.abilities[1]);
+        pokemonAbility.text(data.abilities[0].ability.name);
+        // pokemonHiddenAbility.text(data.abilities[1].ability.name);
+
+        renderStats(pokemonName.text(), data.stats);
       },
     });
   };
 
-  var obtenerListadoPokemon = function () {
+  $.ajax({
+    type: "GET",
+    dataType: "json",
+    url: `https://pokeapi.co/api/v2/pokemon/?limit=1118`,
+    success: function (data) {
+      console.log(data);
+    },
+  });
+
+  var listadoPokemon = function () {
     $.ajax({
       type: "GET",
       dataType: "json",
-      url: `https://pokeapi.co/api/v2/pokemon/${i}`,
+      url: `https://pokeapi.co/api/v2/pokemon/?limit=1118`,
       success: function (data) {
-        selectPokemon.append(
-          $(`<option value="${data.name}">${data.name}</option>`)
-        );
+        for (var i = 0; i < data.count; i++) {
+          selectPokemon.append(
+            $(
+              `<option value="${data.results[i].name}">${data.results[i].name}</option>`
+            )
+          );
+        }
       },
     });
   };
+
+  listadoPokemon();
 
   inputPokemon.on("keypress", function (e) {
     var code = e.keyCode ? e.keyCode : e.which;
     if (code == 13) {
+      e.preventDefault();
       pokemon = this.value;
       pokemon = pokemon.toLowerCase();
-      console.log(pokemon);
+      obtenerPokemon();
     }
-    obtenerPokemon();
   });
 
-  for (var i = 1; i <= 802; i++) {
-    obtenerListadoPokemon();
-  }
-
-  inputMoves.on("keypress", function (e) {
-    var code = e.keyCode ? e.keyCode : e.which;
-    if (code == 13) {
-      pokemon = this.value;
-    }
-
-    $.ajax({
-      type: "GET",
-      dataType: "json",
-      url: `https://pokeapi.co/api/v2/pokemon/${pokemon}`,
-      success: function (data) {
-        console.log(data);
-      },
-    });
+  selectPokemon.on("change", function (e) {
+    pokemon = $(this).children("option:selected").val();
+    obtenerPokemon();
   });
 
 
@@ -110,8 +154,6 @@ $(document).ready(function () {
       },
     });
   });
-
-
 });
 
 

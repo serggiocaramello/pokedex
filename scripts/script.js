@@ -1,6 +1,6 @@
 $(document).ready(function () {
   var inputPokemon = $("#inputPokemon");
-  var pokemon = "";
+  var pokemon = "bulbasaur";
   var pokemonName = $("#pokemonName");
   var pokemonImage = $("#pokemonImage");
   var pokemonNumber = $("#pokemonNumber");
@@ -8,8 +8,10 @@ $(document).ready(function () {
   var pokemonWeight = $("#pokemonWeight");
   var pokemonAbility = $("#pokemonAbility");
   var pokemonHiddenAbility = $("#pokemonHiddenAbility");
+  var pokemonType = $("#pokemonType");
   var inputMoves = $("#inputMoves");
   var selectPokemon = $("#selectPokemon");
+  // var dataPoints = [45, 49, 49, 65, 65, 45];
 
   var labels = [
     "Hp",
@@ -21,7 +23,7 @@ $(document).ready(function () {
   ];
 
   function renderStats(name, stats) {
-    var dataPoints = [];
+    dataPoints = [];
     for (var i = 0; i < stats.length; i++) {
       dataPoints.push({
         y: stats[i].base_stat,
@@ -61,24 +63,38 @@ $(document).ready(function () {
           data.sprites.other["official-artwork"].front_default
         );
         pokemonNumber.text(data.id);
-        pokemonHeight.text((parseInt(data.height) / 10).toString() + "m");
-        pokemonWeight.text((parseInt(data.weight) / 10).toString() + "m");
+        if (data.types.length > 0) {
+          pokemonType.text("");
+          data.types.forEach((ty) => {
+            pokemonType.text(pokemonType.text() + " " + ty.type.name);
+          });
+        } else {
+          pokemonType.text(data.types[0]);
+        }
+        pokemonHeight.text((parseInt(data.height) / 10).toString() + " m");
+        pokemonWeight.text((parseInt(data.weight) / 10).toString() + " m");
         pokemonAbility.text(data.abilities[0].ability.name);
-        // pokemonHiddenAbility.text(data.abilities[1].ability.name);
+        pokemonAbility.text("");
+        data.abilities.forEach((abi) => {
+          if (!abi.is_hidden) {
+            if (data.abilities.length > 2) {
+              pokemonAbility.text(
+                pokemonAbility.text() + abi.ability.name + " / "
+              );
+            } else {
+              pokemonAbility.text(abi.ability.name);
+            }
+          } else {
+            pokemonHiddenAbility.text(abi.ability.name);
+          }
+        });
 
         renderStats(pokemonName.text(), data.stats);
       },
     });
   };
 
-  $.ajax({
-    type: "GET",
-    dataType: "json",
-    url: `https://pokeapi.co/api/v2/pokemon/?limit=1118`,
-    success: function (data) {
-      console.log(data);
-    },
-  });
+  obtenerPokemon();
 
   var listadoPokemon = function () {
     $.ajax({

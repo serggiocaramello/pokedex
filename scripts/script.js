@@ -10,8 +10,8 @@ $(document).ready(function () {
   var pokemonHiddenAbility = $("#pokemonHiddenAbility");
   var pokemonType = $("#pokemonType");
   var inputMoves = $("#inputMoves");
+  var inputPokemon = $("#inputPokemon");
   var selectPokemon = $("#selectPokemon");
-  // var dataPoints = [45, 49, 49, 65, 65, 45];
 
   var labels = [
     "Hp",
@@ -47,6 +47,18 @@ $(document).ready(function () {
       ],
     }).render();
   }
+
+  var inputItems = $("#inputItems");
+  var itemName = $("#itemName");
+  var itemId = $("#itemId");
+  var itemCost = $("#itemCost");
+  var itemAttributes = $("#itemAttributes");
+  var itemCategory = $("#itemCategory");
+  var itemEffect = $("#itemEffect");
+  var itemTitle = $("#itemTitle");
+  var itemImg = $("#itemImg");
+
+  var item = "";
 
   var obtenerPokemon = function () {
     $.ajax({
@@ -128,5 +140,30 @@ $(document).ready(function () {
   selectPokemon.on("change", function (e) {
     pokemon = $(this).children("option:selected").val();
     obtenerPokemon();
+  });
+
+  inputItems.on("keypress", function (e) {
+    var codeItem = e.keyCode ? e.keyCode : e.which;
+    if (codeItem == 13) {
+      item = this.value;
+    }
+
+    // e.preventDefault;
+
+    $.ajax({
+      type: "GET",
+      dataType: "json",
+      url: `https://pokeapi.co/api/v2/item/${item}/`,
+      success: function (data) {
+        itemImg.attr("src", data.sprites.default);
+        itemName.text(data.name);
+        itemTitle.text(data.name);
+        itemId.text(data.id);
+        itemCost.text(data.cost);
+        itemAttributes.text(data.attributes.name);
+        itemCategory.text(data.category.name);
+        itemEffect.text(data.effect_entries[0].effect);
+      },
+    });
   });
 });

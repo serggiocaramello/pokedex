@@ -183,14 +183,12 @@ $(document).ready(function () {
         );
       }
     },
-      });
+   });
 
   selectItems.on("change", function (e) {
     item = $(this).children("option:selected").val();
-     llamarItem();
-  });    
-
-    // e.preventDefault;
+    llamarItem();
+  });
 
     $.ajax({
       type: "GET",
@@ -209,5 +207,5 @@ $(document).ready(function () {
     });
   });
 
-});
+
 

@@ -52,6 +52,9 @@
             <a id="navBtnItems" class="nav-link mt-md-2" href="#"
               >Buscar por Items</a
             >
+            <a id="navBtnBerries" class="nav-link mt-md-2" href="#"
+              >Buscar por Berry</a
+            >
           </div>
         </div>
       </nav>
@@ -69,8 +72,7 @@
                 type="text"
                 class="form-control mb-3"
                 id="inputPokemon"
-                placeholder="Nombre de un pokémon
-                  "
+                placeholder="Nombre de un pokémon"
               />
             </div>
 
@@ -107,19 +109,19 @@
                 </tr>
                 <tr>
                   <th scope="row">Height</th>
-                  <td>1.7m</td>
+                  <td id="pokemonHeight">1.7m</td>
                 </tr>
                 <tr>
-                  <th scope="row">Weigth</th>
-                  <td>79.5kg</td>
+                  <th scope="row">Weight</th>
+                  <td id="pokemonWeight">79.5kg</td>
                 </tr>
                 <tr>
                   <th scope="row">Ability</th>
-                  <td>Blaze</td>
+                  <td id="pokemonAbility">Blaze</td>
                 </tr>
                 <tr>
                   <th scope="row">Hidden ability</th>
-                  <td>Flash-fire</td>
+                  <td id="pokemonHiddenAbility">Flash-fire</td>
                 </tr>
               </tbody>
             </table>
@@ -220,9 +222,8 @@
               <input
                 type="text"
                 class="form-control mb-3"
-                id="inputItem"
-                placeholder="Nombre de un item
-                  "
+                id="inputItems"
+                placeholder="Nombre de un item"
               />
             </div>
 
@@ -295,6 +296,70 @@
         </div>
       </section>
       <!-- Final Sección Items -->
+
+      <!-- Inicio Sección Berries -->
+      <section id="sectionBerries" class="berries d-none">
+        <h2 class="mb-4">Obtener información de una baya</h2>
+        <form>
+          <div class="row">
+            <div class="col-md-6">
+              <input
+                type="text"
+                class="form-control mb-3"
+                id="inputBerries"
+                placeholder="Nombre de una baya"
+              />
+            </div>
+
+            <div class="col-md-6">
+              <select id="selectBerries" class="mb-3 form-select col-md-6">
+                <option value="cheri-berry">cheri-berry</option>
+                <option value="chesto-berry">chesto-berry</option>
+                <option value="pecha-berry">pecha-berry</option>
+                <option value="rawst-berry">rawst-berry</option>
+                <option value="aspear-berry">aspear-berry</option>
+                <option value="leppa-berry">leppa-berry</option>
+                <option value="oran-berry">oran-berry</option>
+                <option value="persim-berry">persim-berry</option>
+                <option value="lum-berry">lum-berry</option>
+              </select>
+            </div>
+          </div>
+        </form>
+
+        <div class="berries__data row mt-md-5">
+          <div class="berries__header d-flex align-items-center mb-3">
+            <h2 class="mb-0 me-3">Cheri berry</h2>
+          </div>
+          <div class="d-md-flex align-items-center">
+            <table class="table items__table table-striped mb-md-0">
+              <tbody>
+                <tr>
+                  <th scope="row">Name</th>
+                  <td id="movesName">Cheri berry</td>
+                </tr>
+                <tr>
+                  <th scope="row">Natural gift power</th>
+                  <td>60</td>
+                </tr>
+                <tr>
+                  <th scope="row">Natural gift type</th>
+                  <td>Fire</td>
+                </tr>
+                <tr>
+                  <th scope="row">Size</th>
+                  <td>2cm</td>
+                </tr>
+                <tr>
+                  <th scope="row">Firmness</th>
+                  <td>Soft</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+      <!-- Final Sección Berries -->
     </main>
     <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>

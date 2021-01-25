@@ -72,7 +72,7 @@
                 type="text"
                 class="form-control mb-3"
                 id="inputPokemon"
-                placeholder="Nombre de un pokémon"
+                placeholder="Nombre o número de un pokémon"
               />
             </div>
 
@@ -145,7 +145,7 @@
                 type="text"
                 class="form-control mb-3"
                 id="inputMoves"
-                placeholder="Nombre de un movimiento
+                placeholder="Nombre o número de un movimiento
                   "
               />
             </div>
@@ -217,7 +217,7 @@
                 type="text"
                 class="form-control mb-3"
                 id="inputItems"
-                placeholder="Nombre de un item"
+                placeholder="Nombre o número de un item"
               />
             </div>
 
@@ -284,52 +284,45 @@
                 type="text"
                 class="form-control mb-3"
                 id="inputBerries"
-                placeholder="Nombre de una baya"
+                placeholder="Nombre o número de una baya"
               />
             </div>
 
             <div class="col-md-6">
-              <select id="selectBerries" class="mb-3 form-select col-md-6">
-                <option value="cheri-berry">cheri-berry</option>
-                <option value="chesto-berry">chesto-berry</option>
-                <option value="pecha-berry">pecha-berry</option>
-                <option value="rawst-berry">rawst-berry</option>
-                <option value="aspear-berry">aspear-berry</option>
-                <option value="leppa-berry">leppa-berry</option>
-                <option value="oran-berry">oran-berry</option>
-                <option value="persim-berry">persim-berry</option>
-                <option value="lum-berry">lum-berry</option>
-              </select>
+              <select
+                id="selectBerries"
+                class="mb-3 form-select col-md-6"
+              ></select>
             </div>
           </div>
         </form>
 
         <div class="berries__data row mt-md-5">
           <div class="berries__header d-flex align-items-center mb-3">
-            <h2 class="mb-0 me-3">Cheri berry</h2>
+            <h2 id="berries__title" class="mb-0 me-3">Cheri berry</h2>
           </div>
           <div class="d-md-flex align-items-center">
             <table class="table items__table table-striped mb-md-0">
               <tbody>
                 <tr>
                   <th scope="row">Name</th>
-                  <td id="movesName">Cheri berry</td>
+                  <td id="berry-name">Cheri berry</td>
                 </tr>
                 <tr>
                   <th scope="row">Natural gift power</th>
-                  <td>60</td>
+                  <td id="naturalGiftPower">60</td>
                 </tr>
                 <tr>
                   <th scope="row">Natural gift type</th>
-                  <td>Fire</td>
+                  <td id="naturalGiftType">Fire</td>
                 </tr>
                 <tr>
                   <th scope="row">Size</th>
-                  <td>2cm</td>
+                  <td id="berry-size">20 mm</td>
                 </tr>
                 <tr>
                   <th scope="row">Firmness</th>
-                  <td>Soft</td>
+                  <td id="berry-firmness">Soft</td>
                 </tr>
               </tbody>
             </table>

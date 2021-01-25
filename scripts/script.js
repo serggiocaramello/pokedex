@@ -298,6 +298,84 @@ $(document).ready(function () {
       });
     }
   });
+
+  //ivan
+
+  $.ajax({
+    type: "GET",
+    dataType: "json",
+    url: `https://pokeapi.co/api/v2/berry/?limit=64`,
+    success: function (data) {
+      data.results.forEach((element) => {
+        $("#selectBerries").append(
+          $(
+            `<option value="${element.name}">${
+              element.name.charAt(0).toUpperCase() +
+              element.name.substr(1).toLowerCase()
+            }</option>`
+          )
+        );
+      });
+    },
+  });
+
+  // Berry Select
+  var berry = "";
+
+  $("#selectBerries").on("change", function () {
+    var berry = $(this).val();
+
+    $.ajax({
+      type: "GET",
+      dataType: "json",
+      url: `https://pokeapi.co/api/v2/berry/${berry}`,
+      success: function (data) {
+        $("#berries__title").text(
+          data.name.charAt(0).toUpperCase() +
+            data.name.substr(1).toLowerCase() +
+            " berry"
+        );
+        $("#berry-name").text(
+          data.name.charAt(0).toUpperCase() + data.name.substr(1).toLowerCase()
+        );
+        $("#naturalGiftPower").text(data.natural_gift_power);
+        $("#naturalGiftType").text(
+          data.natural_gift_type.name.charAt(0).toUpperCase() +
+            data.natural_gift_type.name.substr(1).toLowerCase()
+        );
+        $("#berry-size").text((parseInt(data.size) / 10).toString() + " mm");
+        $("#berry-firmness").text(
+          data.firmness.name.charAt(0).toUpperCase() +
+            data.firmness.name.substr(1).toLowerCase()
+        );
+      },
+    });
+  });
+
+  $("#inputBerries").on("keypress", function (e) {
+    var code = e.keyCode ? e.keyCode : e.which;
+    if (code == 13) {
+      berry = this.value;
+
+      $.ajax({
+        type: "GET",
+        dataType: "json",
+        url: `https://pokeapi.co/api/v2/berry/${berry}`,
+        success: function (data) {
+          $("#berries__title").text(
+            data.name.charAt(0).toUpperCase() +
+              data.name.substr(1).toLowerCase() +
+              " berry"
+          );
+          $("#berry-name").text(data.name);
+          $("#naturalGiftPower").text(data.natural_gift_power);
+          $("#naturalGiftType").text(data.natural_gift_type.name);
+          $("#berry-size").text((parseInt(data.size) / 10).toString() + " mm");
+          $("#berry-firmness").text(data.firmness.name);
+        },
+      });
+    }
+  });
 });
 
 //final
